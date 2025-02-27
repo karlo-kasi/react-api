@@ -5,23 +5,23 @@ function App() {
 
   const endpoint = "http://localhost:3000/posts"
 
-  const [posts, setPosts] = useState ([])
+  const [posts, setPosts] = useState([])
 
   // facciamo la nostra chiamata al back end
-  const fechPosts = () => {
+  const fetchPosts = () => {
     axios.get(endpoint)
-    .then( res => setPosts (res.data))
+      .then((res) => setPosts(res.data))
+
   }
+
+  useEffect(fetchPosts, [])
+
 
   return (
     <>
       <div className="container mt-5">
-        <div
-          className="table-responsive"
-        >
-          <table
-            className="table table-primary"
-          >
+        <div className="table-responsive">
+          <table className="table table-primary">
             <thead>
               <tr>
                 <th scope="col">Column 1</th>
@@ -30,20 +30,21 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              <tr className="">
-                <td scope="row">R1C1</td>
-                <td>R1C2</td>
-                <td>R1C3</td>
-              </tr>
-              <tr class="">
-                <td scope="row">Item</td>
-                <td>Item</td>
-                <td>Item</td>
-              </tr>
+              {
+                posts.map((post) => {
+                  const { id, title, image } = post
+                  return (
+                    <tr key={id}>
+                      <td>{id}</td>
+                      <td>{title}</td>
+                      <td>{image}</td>
+                    </tr>
+                  )
+                })
+              }
             </tbody>
           </table>
         </div>
-
 
       </div>
     </>
